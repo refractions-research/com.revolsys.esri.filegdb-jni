@@ -7,7 +7,7 @@
   <groupId>com.revolsys.esri</groupId>
   <artifactId>filegdb-jni</artifactId>
   <description>Java Bindings for the ESRI FileGeodatabase API</description>
-  <version>1.5.1-8</version>
+  <version>1.5.3-1</version>
   <inceptionYear>2018</inceptionYear>
   <organization>
     <name>Revolution Systems Inc.</name>
