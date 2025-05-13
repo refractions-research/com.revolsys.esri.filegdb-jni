@@ -13,7 +13,7 @@ def checkoutBranch(folderName, url, branchName) {
   }
 }
 
-node ('master') {
+node ('built-in') {
   echo 'Running on the master node!'
 
 
