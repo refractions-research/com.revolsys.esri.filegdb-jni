@@ -44,7 +44,7 @@ git config --global user.name "Emily Gouge"
     dir ('source') {
       sh '''
 npm install --loglevel silent
-
+gulp
       '''
     }
   }
