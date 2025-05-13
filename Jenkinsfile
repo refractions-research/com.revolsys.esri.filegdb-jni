@@ -14,6 +14,9 @@ def checkoutBranch(folderName, url, branchName) {
 }
 
 node ('master') {
+  echo 'Running on the master node!'
+
+
   def artifactoryServer = Artifactory.server 'prod'
   def mavenRuntime = Artifactory.newMavenBuild()
   env.JAVA_HOME="${tool 'jdk11'}"
