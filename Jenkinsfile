@@ -25,8 +25,8 @@ node ('master') {
 
   stage ('SCM globals') {
      sh '''
-git config --global user.email "paul.austin@revolsys.com"
-git config --global user.name "Paul Austin"
+git config --global user.email "egouge@refractions.net"
+git config --global user.name "Emily Gouge"
      '''
   }
 
@@ -34,7 +34,7 @@ git config --global user.name "Paul Austin"
     dir ('source') {
       deleteDir()
     }
-    checkoutBranch('source', 'https://github.com/revolsys/com.revolsys.esri.filegdb-jni.git', 'master');
+    checkoutBranch('source', 'https://github.com/refractions-research/com.revolsys.esri.filegdb-jni.git', 'v_1_5_3_updates');
   }
   
   stage ('Cross Platform') {
@@ -56,16 +56,16 @@ gulp
     ''', name: 'shared';
 
     stash includes: '''
-      source/target/FileGDB_API-64clang/include/**,
-      source/target/FileGDB_API-64clang/lib/**,
+      source/target/FileGDB_API_MACOSX15_64clang/include/**,
+      source/target/FileGDB_API_MACOSX15_64clang/lib/**,
       source/target/classes/natives/osx_64/**
     ''', name: 'osx';
 
     stash includes: '''
       source/build-winnt.bat,
       source/Makefile.nmake,
-      source/target/FileGDB_API-VS2017/include/**,
-      source/target/FileGDB_API-VS2017/lib64/**
+      source/target/FileGDB_API_VS2022/include/**,
+      source/target/FileGDB_API_VS2022/lib64/**
     ''', name: 'windows';
 
     node ('macosx') {
@@ -111,8 +111,8 @@ gulp linkOSX
     dir ('source') {
       javaHome = "${tool 'jdk11'}"
       sh """
-clang++ -W -fexceptions -fPIC -O3 -m64 -DUNICODE -D_UNICODE -DUNIX -D_REENTRANT -DFILEGDB_API -D__USE_FILE_OFFSET64 -DUNIX_FILEGDB_API -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE "-I${javaHome}/include/" "-I${javaHome}/include/linux" "-Itarget/FileGDB_API-64/include" -DLINUX_CLANG -std=c++11 -stdlib=libstdc++ -Wno-narrowing -c target/cpp/EsriFileGdb_wrap.cpp -o target/cpp/EsriFileGdb_wrap.o
-clang++ -lFileGDBAPI -v -stdlib=libstdc++ -lpthread -lrt -Ltarget/FileGDB_API-64/lib -shared -o target/classes/natives/linux_64/libFileGdbJni.so target/cpp/EsriFileGdb_wrap.o
+clang++ -W -fexceptions -fPIC -O3 -m64 -DUNICODE -D_UNICODE -DUNIX -D_REENTRANT -DFILEGDB_API -D__USE_FILE_OFFSET64 -DUNIX_FILEGDB_API -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE "-I${javaHome}/include/" "-I${javaHome}/include/linux" "-Itarget/FileGDB_API_RHEL8_64/include" -DLINUX_CLANG -std=c++11 -stdlib=libstdc++ -Wno-narrowing -c target/cpp/EsriFileGdb_wrap.cpp -o target/cpp/EsriFileGdb_wrap.o
+clang++ -lFileGDBAPI -v -stdlib=libstdc++ -lpthread -lrt -Ltarget/FileGDB_API_RHEL8_64/lib -shared -o target/classes/natives/linux_64/libFileGdbJni.so target/cpp/EsriFileGdb_wrap.o
       """
     }
   

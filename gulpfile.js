@@ -92,14 +92,14 @@ gulp.task('swig', run('swig -c++ -o target/cpp/EsriFileGdb_wrap.cpp -java -packa
 }));
 
 gulp.task('compileOSX', run(
-  `clang++ -W -fexceptions -fPIC -O3 -m64 -DUNICODE -D_UNICODE -DUNIX -D_REENTRANT -DFILEGDB_API -D__USE_FILE_OFFSET64 -DUNIX_FILEGDB_API -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE "-I${javaHomeMac}/include/" "-I${javaHomeMac}/include/darwin" "-Itarget/FileGDB_API-64clang/include" -stdlib=libc++ -c target/cpp/EsriFileGdb_wrap.cpp -o target/cpp/EsriFileGdb_wrap.o`
+  `clang++ -W -fexceptions -fPIC -O3 -m64 -DUNICODE -D_UNICODE -DUNIX -D_REENTRANT -DFILEGDB_API -D__USE_FILE_OFFSET64 -DUNIX_FILEGDB_API -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE "-I${javaHomeMac}/include/" "-I${javaHomeMac}/include/darwin" "-Itarget/FileGDB_API_MACOSX15_64clang/include" -stdlib=libc++ -c target/cpp/EsriFileGdb_wrap.cpp -o target/cpp/EsriFileGdb_wrap.o`
 ));
 
 gulp.task('linkOSX', run([
   'mkdir -p target/classes/natives/osx_64/',
   `codesign -s '-' target/classes/natives/osx_64/libFileGDBAPI.dylib`,
   `codesign -s '-' target/classes/natives/osx_64/libfgdbunixrtl.dylib`,
-  `clang++ -lFileGDBAPI -stdlib=libc++ -Ltarget/FileGDB_API-64clang/lib -shared -o target/classes/natives/osx_64/libFileGdbJni.dylib target/cpp/EsriFileGdb_wrap.o`,
+  `clang++ -lFileGDBAPI -stdlib=libc++ -Ltarget/FileGDB_API_MACOSX15_64clang/lib -shared -o target/classes/natives/osx_64/libFileGdbJni.dylib target/cpp/EsriFileGdb_wrap.o`,
   `codesign -s '-' target/classes/natives/osx_64/libFileGdbJni.dylib`
 ]));
 
