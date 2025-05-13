@@ -17,14 +17,14 @@ node ('built-in') {
   echo 'Running on the master node!'
 
 
-  def artifactoryServer = Artifactory.server 'prod'
-  def mavenRuntime = Artifactory.newMavenBuild()
-  env.JAVA_HOME="${tool 'jdk11'}"
-  mavenRuntime.tool = 'm3' 
-  mavenRuntime.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: artifactoryServer
-  mavenRuntime.resolver releaseRepo: 'repo', snapshotRepo: 'repo', server: artifactoryServer
-  mavenRuntime.deployer.deployArtifacts = false
-  def buildInfo = Artifactory.newBuildInfo()
+  //def artifactoryServer = Artifactory.server 'prod'
+  //def mavenRuntime = Artifactory.newMavenBuild()
+  //env.JAVA_HOME="${tool 'jdk17'}"
+  //mavenRuntime.tool = 'm3' 
+  //mavenRuntime.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: artifactoryServer
+  //mavenRuntime.resolver releaseRepo: 'repo', snapshotRepo: 'repo', server: artifactoryServer
+  //mavenRuntime.deployer.deployArtifacts = false
+  //def buildInfo = Artifactory.newBuildInfo()
 
   stage ('SCM globals') {
      sh '''
@@ -121,14 +121,14 @@ clang++ -lFileGDBAPI -v -stdlib=libstdc++ -lpthread -lrt -Ltarget/FileGDB_API_RH
   
     stage('build') {
       dir ('source') {
-        mavenRuntime.run pom: 'pom.xml', goals: 'install', buildInfo: buildInfo
+        //mavenRuntime.run pom: 'pom.xml', goals: 'install', buildInfo: buildInfo
       }
     }
     
     stage('deploy') {
       dir ('source') {
-        mavenRuntime.deployer.deployArtifacts buildInfo
-        artifactoryServer.publishBuildInfo buildInfo
+        //mavenRuntime.deployer.deployArtifacts buildInfo
+        //artifactoryServer.publishBuildInfo buildInfo
       }
     }
   }
