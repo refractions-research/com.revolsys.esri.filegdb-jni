@@ -37,7 +37,7 @@ git config --global user.name "Emily Gouge"
     dir ('source') {
       deleteDir()
     }
-    checkoutBranch('source', 'https://github.com/refractions-research/com.revolsys.esri.filegdb-jni.git', 'v_1_5_3_updates');
+    checkoutBranch('source', 'https://github.com/refractions-research/com.revolsys.esri.filegdb-jni.git', 'v1_5_3_updates');
   }
   
   stage ('Cross Platform') {
