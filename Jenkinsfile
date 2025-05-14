@@ -113,9 +113,6 @@ gulp
 
   stage ('linux build') {
     dir ('source') {
-      sh '''
-ls
-      '''
     }
   }
 
