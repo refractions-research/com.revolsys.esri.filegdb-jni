@@ -111,13 +111,10 @@ gulp
 //    unstash 'osxLib'
     unstash 'windowsLib'
 
-  stage ('linux build') {
-    dir ('source') {
-      sh '''
-npm install --loglevel silent
-      '''
+    dir ('source') {      
+      sh 'echo "Testing PATH"'
     }
-  }
+  
 
   
     stage('build') {
