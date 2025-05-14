@@ -71,7 +71,12 @@ gulp
       source/target/FileGDB_API_VS2022/lib64/**
     ''', name: 'windows';
 
-
+    dir ('source') {      
+      sh '''
+clang++ -W -fexceptions -fPIC -O3 -m64 -DUNICODE -D_UNICODE -DUNIX -D_REENTRANT -DFILEGDB_API -D__USE_FILE_OFFSET64 -DUNIX_FILEGDB_API -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE "-I/usr/lib/jvm/default-java/include/" "-I/usr/lib/jvm/default-java/include/linux" "-Itarget/FileGDB_API_RHEL8_64/include" -DLINUX_CLANG -std=c++11 -stdlib=libstdc++ -Wno-narrowing -c target/cpp/EsriFileGdb_wrap.cpp -o target/cpp/EsriFileGdb_wrap.o
+clang++ -lFileGDBAPI -v -stdlib=libstdc++ -lpthread -lrt -Ltarget/FileGDB_API_RHEL8_64/lib -shared -o target/classes/natives/linux_64/libFileGdbJni.so target/cpp/EsriFileGdb_wrap.o
+      '''
+    }
 
 //    node ('macosx') {
 //      dir ('source') {
@@ -111,25 +116,15 @@ gulp
     }
 
 //    unstash 'osxLib'
-    
-    node ('built-in') {
-      dir ('source') {      
+    unstash 'windowsLib'
+  
+    stage('build') {
+      dir ('source') {
+        //mavenRuntime.run pom: 'pom.xml', goals: 'install', buildInfo: buildInfo
+        //mavenRuntime.run pom: 'pom.xml', goals: 'install'
         sh '''
-  clang++ -W -fexceptions -fPIC -O3 -m64 -DUNICODE -D_UNICODE -DUNIX -D_REENTRANT -DFILEGDB_API -D__USE_FILE_OFFSET64 -DUNIX_FILEGDB_API -D_FILE_OFFSET_BITS=64 -D_LARGEFILE64_SOURCE "-I/usr/lib/jvm/default-java/include/" "-I/usr/lib/jvm/default-java/include/linux" "-Itarget/FileGDB_API_RHEL8_64/include" -DLINUX_CLANG -std=c++11 -stdlib=libstdc++ -Wno-narrowing -c target/cpp/EsriFileGdb_wrap.cpp -o target/cpp/EsriFileGdb_wrap.o
-  clang++ -lFileGDBAPI -v -stdlib=libstdc++ -lpthread -lrt -Ltarget/FileGDB_API_RHEL8_64/lib -shared -o target/classes/natives/linux_64/libFileGdbJni.so target/cpp/EsriFileGdb_wrap.o
+mvn install
         '''
-      }
-  
-      unstash 'windowsLib'
-  
-      stage('build') {
-        dir ('source') {
-          //mavenRuntime.run pom: 'pom.xml', goals: 'install', buildInfo: buildInfo
-          //mavenRuntime.run pom: 'pom.xml', goals: 'install'
-          sh '''
-  mvn install
-          '''
-        }
       }
     }
     
