@@ -71,6 +71,10 @@ gulp
       source/target/FileGDB_API_VS2022/lib64/**
     ''', name: 'windows';
 
+    dir ('source') {      
+      sh 'echo "Testing PATH"'
+    }
+    
 //    node ('macosx') {
 //      dir ('source') {
 //        deleteDir()
@@ -111,9 +115,7 @@ gulp
 //    unstash 'osxLib'
     unstash 'windowsLib'
 
-    dir ('source') {      
-      sh 'echo "Testing PATH"'
-    }
+
   
 
   
