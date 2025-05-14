@@ -121,10 +121,7 @@ clang++ -lFileGDBAPI -v -stdlib=libstdc++ -lpthread -lrt -Ltarget/FileGDB_API_RH
     stage('build') {
       dir ('source') {
         //mavenRuntime.run pom: 'pom.xml', goals: 'install', buildInfo: buildInfo
-        //mavenRuntime.run pom: 'pom.xml', goals: 'install'
-        sh '''
-mvn install
-        '''
+        mavenRuntime.run pom: 'pom.xml', goals: 'install'
       }
     }
     
