@@ -113,6 +113,9 @@ gulp
 
   stage ('linux build') {
     dir ('source') {
+      sh '''
+npm install --loglevel silent
+      '''
     }
   }
 
