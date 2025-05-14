@@ -111,7 +111,7 @@ gulp
     }
 
 //    unstash 'osxLib'
-    unstash 'windowsLib'
+    
 
     dir ('source') {      
       sh '''
@@ -120,7 +120,7 @@ clang++ -lFileGDBAPI -v -stdlib=libstdc++ -lpthread -lrt -Ltarget/FileGDB_API_RH
       '''
     }
   
-
+    unstash 'windowsLib'
   
     stage('build') {
       dir ('source') {
