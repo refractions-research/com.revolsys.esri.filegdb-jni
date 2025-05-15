@@ -1,3 +1,8 @@
+//EG: May 15, 2025
+// I have commented out all code related to building for MacOSX 
+// I have commented out all code related to maven builds and I couldn't get it to work and
+// instead ran that code directly on the docker instance
+
 def checkoutBranch(folderName, url, branchName) {
   dir(folderName) {
     deleteDir()
@@ -117,6 +122,9 @@ clang++ -lFileGDBAPI -v -stdlib=libstdc++ -lpthread -lrt -Ltarget/FileGDB_API_RH
 
 //    unstash 'osxLib'
     unstash 'windowsLib'
+  
+  //EG: I could not get anything to run properly after node (windows-agent) so
+  //it's all commented out and I ran the code directly on docker instance
   
     //stage('build') {
     //  dir ('source') {
